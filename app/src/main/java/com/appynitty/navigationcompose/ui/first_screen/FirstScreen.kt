@@ -45,7 +45,14 @@ fun FirstScreen(modifier: Modifier = Modifier, navController: NavHostController)
         Spacer(modifier.height(15.dp))
 
         Button(onClick = {
-            navController.navigate(Destinations.SECOND_SCREEN_ROUTE)
+            navController.navigate(Destinations.SECOND_SCREEN_ROUTE){
+                // Ensure single instance of SecondScreen
+                launchSingleTop = true
+                // Pop up to FirstScreen to keep stack clean
+                popUpTo(Destinations.FIRST_SCREEN_ROUTE) {
+                    inclusive = false // Don't pop FirstScreen itself
+                }
+            }
         }) {
             Text("Go to second screen")
         }

@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.appynitty.navigationcompose.Destinations
 
 @Composable
 fun SecondScreen(modifier: Modifier = Modifier, navController: NavHostController) {
@@ -41,7 +42,10 @@ fun SecondScreen(modifier: Modifier = Modifier, navController: NavHostController
         Spacer(modifier = Modifier.height(15.dp))
 
         Button(onClick = {
-            navController.popBackStack() // Back navigation trigger kiya
+            navController.popBackStack(
+                Destinations.FIRST_SCREEN_ROUTE,
+                inclusive = false
+            ) // triggered Back navigation here.
         }) {
             Text("Go back to first screen")
         }
@@ -50,6 +54,6 @@ fun SecondScreen(modifier: Modifier = Modifier, navController: NavHostController
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun SecondScreenPreview(){
+fun SecondScreenPreview() {
     SecondScreen(navController = NavHostController(LocalContext.current))
 }
