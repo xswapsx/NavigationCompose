@@ -22,9 +22,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.appynitty.navigationcompose.Destinations
+import com.appynitty.navigationcompose.NavigationActions
 
 @Composable
-fun FirstScreen(modifier: Modifier = Modifier, navController: NavHostController) {
+fun FirstScreen(modifier: Modifier = Modifier, navigationActions: NavigationActions) {
 
     Column (
         modifier = modifier
@@ -45,14 +46,7 @@ fun FirstScreen(modifier: Modifier = Modifier, navController: NavHostController)
         Spacer(modifier.height(15.dp))
 
         Button(onClick = {
-            navController.navigate(Destinations.SECOND_SCREEN_ROUTE){
-                // Ensure single instance of SecondScreen
-                launchSingleTop = true
-                // Pop up to FirstScreen to keep stack clean
-                popUpTo(Destinations.FIRST_SCREEN_ROUTE) {
-                    inclusive = false // Don't pop FirstScreen itself
-                }
-            }
+            navigationActions.navigateToSecondScreen()
         }) {
             Text("Go to second screen")
         }
@@ -64,5 +58,5 @@ fun FirstScreen(modifier: Modifier = Modifier, navController: NavHostController)
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun FirstScreenPreview() {
-    FirstScreen(navController = NavHostController(LocalContext.current))
+    FirstScreen(navigationActions = NavigationActions(NavHostController(LocalContext.current)))
 }

@@ -9,14 +9,15 @@ import com.appynitty.navigationcompose.ui.first_screen.FirstScreen
 import com.appynitty.navigationcompose.ui.second_screen.SecondScreen
 
 @Composable
-fun MyNavGraph(navController: NavHostController = rememberNavController()) {
+fun MyNavGraph(navController: NavHostController = rememberNavController(),
+        navigationActions: NavigationActions = NavigationActions(navController)) {
 
     NavHost(navController = navController, startDestination = Destinations.FIRST_SCREEN_ROUTE) {
         composable(Destinations.FIRST_SCREEN_ROUTE) {
-            FirstScreen(navController = navController)
+            FirstScreen(navigationActions = navigationActions)
         }
         composable(Destinations.SECOND_SCREEN_ROUTE) {
-            SecondScreen(navController = navController)
+            SecondScreen(navigationActions = navigationActions)
         }
     }
 }
