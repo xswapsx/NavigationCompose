@@ -2,6 +2,9 @@ package com.appynitty.navigationcompose
 
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import com.appynitty.navigationcompose.DestinationsArgs.USER_NAME_ARG
+import com.appynitty.navigationcompose.Screens.FIRST_SCREEN
+import com.appynitty.navigationcompose.Screens.SECOND_SCREEN
 
 /**
  * Screens used in [Destinations]
@@ -23,8 +26,8 @@ object DestinationsArgs {
  * Destinations used in the app
  */
 object Destinations {
-    const val FIRST_SCREEN_ROUTE = Screens.FIRST_SCREEN
-    const val SECOND_SCREEN_ROUTE = Screens.SECOND_SCREEN
+    const val FIRST_SCREEN_ROUTE = FIRST_SCREEN
+    const val SECOND_SCREEN_ROUTE = "${SECOND_SCREEN}/{${USER_NAME_ARG}}"
 }
 
 /**
@@ -34,6 +37,9 @@ class NavigationActions(private val navController: NavHostController) {
 
     fun navigateToFirstScreen() {
         navController.navigate(Destinations.FIRST_SCREEN_ROUTE) {
+            popUpTo(Destinations.SECOND_SCREEN_ROUTE) {
+                inclusive = true // Remove SecondScreen completely
+            }
             popUpTo(navController.graph.findStartDestination().id) {
                 saveState = true
             }
@@ -42,13 +48,16 @@ class NavigationActions(private val navController: NavHostController) {
         }
     }
 
-    fun navigateToSecondScreen() {
-        navController.navigate(Destinations.SECOND_SCREEN_ROUTE) {
+    fun navigateToSecondScreen(userName: String) {
+        val route = "${SECOND_SCREEN}/$userName"
+        navController.navigate(route) {
+            popUpTo(Destinations.SECOND_SCREEN_ROUTE) {
+                inclusive = true // Remove previous SecondScreen instance
+            }
             popUpTo(navController.graph.findStartDestination().id) {
                 saveState = true
             }
             launchSingleTop = true
-            restoreState = true
         }
     }
 }

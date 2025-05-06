@@ -1,5 +1,6 @@
 package com.appynitty.navigationcompose.ui.second_screen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,7 +23,12 @@ import androidx.navigation.NavHostController
 import com.appynitty.navigationcompose.NavigationActions
 
 @Composable
-fun SecondScreen(modifier: Modifier = Modifier, navigationActions: NavigationActions) {
+fun SecondScreen(
+    modifier: Modifier = Modifier,
+    navigationActions: NavigationActions,
+    userName: String
+) {
+    Log.d("SecondScreen====", userName)
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -31,7 +37,7 @@ fun SecondScreen(modifier: Modifier = Modifier, navigationActions: NavigationAct
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "This is second screen",
+            text = "Hi, $userName! Welcome to the second screen",
             color = MaterialTheme.colorScheme.primary,
             textAlign = TextAlign.Center,
             modifier = modifier,
@@ -52,5 +58,8 @@ fun SecondScreen(modifier: Modifier = Modifier, navigationActions: NavigationAct
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun SecondScreenPreview() {
-    SecondScreen(navigationActions = NavigationActions(NavHostController(LocalContext.current)))
+    SecondScreen(
+        navigationActions = NavigationActions(NavHostController(LocalContext.current)),
+        userName = ""
+    )
 }
