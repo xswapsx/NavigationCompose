@@ -13,12 +13,12 @@ import com.appynitty.navigationcompose.ui.second_screen.SecondScreen
 @Composable
 fun MyNavGraph(
     navController: NavHostController = rememberNavController(),
-    navigationActions: NavigationActions = NavigationActions(navController)
+    navActions: NavigationActions = NavigationActions(navController)
 ) {
 
     NavHost(navController = navController, startDestination = Destinations.FIRST_SCREEN_ROUTE) {
         composable(Destinations.FIRST_SCREEN_ROUTE) {
-            FirstScreen(navigationActions = navigationActions)
+            FirstScreen(navigationActions = navActions)
         }
         composable(
             route = Destinations.SECOND_SCREEN_ROUTE,
@@ -29,7 +29,7 @@ fun MyNavGraph(
         ) { backStackEntry ->
             val userName =
                 backStackEntry.arguments?.getString(DestinationsArgs.USER_NAME_ARG) ?: "Guest"
-            SecondScreen(navigationActions = navigationActions, userName = userName)
+            SecondScreen(navigationActions = navActions, userName = userName)
         }
     }
 }
