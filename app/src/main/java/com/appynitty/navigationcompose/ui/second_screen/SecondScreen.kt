@@ -1,5 +1,6 @@
 package com.appynitty.navigationcompose.ui.second_screen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -38,7 +39,12 @@ fun SecondScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        topBar = { SecondScreenTopAppBar(openDrawer = openDrawer) }
+        topBar = {
+            SecondScreenTopAppBar(
+                openDrawer = openDrawer,
+                onClickSettings = { Log.d("SecondScreen", "Settings clicked!") },
+                onClickAboutUs = { Log.d("SecondScreen", "About us clicked!") })
+        }
     ) { paddingValues ->
 
         Column(
