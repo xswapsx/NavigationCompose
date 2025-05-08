@@ -31,6 +31,7 @@ import com.appynitty.navigationcompose.Destinations
 import com.appynitty.navigationcompose.NavigationActions
 import com.appynitty.navigationcompose.R
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -48,7 +49,8 @@ fun AppModalDrawer(
                 currentRoute = currentRoute,
                 navigateToFirstScreen = { navActions.navigateToFirstScreen() },
                 navigateToSecondScreen = { navActions.navigateToSecondScreen("Guest") },
-                closeDrawer = { coroutineScope.launch { drawerState.close() } }
+                closeDrawer = { coroutineScope.launch { drawerState.close() } },
+                scope = coroutineScope
             )
         }) {
         content()
@@ -61,7 +63,8 @@ fun AppDrawer(
     navigateToFirstScreen: () -> Unit,
     navigateToSecondScreen: () -> Unit,
     closeDrawer: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    scope: CoroutineScope
 ) {
     Surface(color = MaterialTheme.colorScheme.background) {
         Column(
@@ -75,8 +78,12 @@ fun AppDrawer(
                 label = "First Screen",
                 isSelected = currentRoute == Destinations.FIRST_SCREEN_ROUTE,
                 action = {
-                    navigateToFirstScreen()
-                    closeDrawer()
+                    scope.launch {
+                        closeDrawer()
+                        delay(250)
+                        navigateToFirstScreen()
+                    }
+
                 }
             )
             DrawerButton(
@@ -84,8 +91,11 @@ fun AppDrawer(
                 label = "First Screen",
                 isSelected = currentRoute == Destinations.SECOND_SCREEN_ROUTE,
                 action = {
-                    navigateToSecondScreen()
-                    closeDrawer()
+                    scope.launch {
+                        closeDrawer()
+                        delay(250)
+                        navigateToSecondScreen()
+                    }
                 }
             )
         }
