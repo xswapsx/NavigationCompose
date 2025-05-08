@@ -72,7 +72,13 @@ fun FirstScreen(
             Spacer(modifier.height(15.dp))
 
             Button(onClick = {
-                navigationActions.navigateToSecondScreen(userName)
+                navigationActions.navigateToSecondScreen(
+                    if (userName.isNotEmpty()) {
+                        userName
+                    } else {
+                        "Guest"
+                    }
+                )
             }) {
                 Text("Go to second screen")
             }
