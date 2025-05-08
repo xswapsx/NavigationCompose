@@ -19,7 +19,7 @@ private object Screens {
  */
 object DestinationsArgs {
     const val USER_NAME_ARG = "userName"
-    const val USER_ID_ARG = "userId"
+//    const val USER_ID_ARG = "userId"
 }
 
 /**

@@ -31,7 +31,6 @@ import com.appynitty.navigationcompose.Destinations
 import com.appynitty.navigationcompose.NavigationActions
 import com.appynitty.navigationcompose.R
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
