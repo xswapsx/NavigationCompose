@@ -37,27 +37,18 @@ class NavigationActions(private val navController: NavHostController) {
 
     fun navigateToFirstScreen() {
         navController.navigate(Destinations.FIRST_SCREEN_ROUTE) {
-            popUpTo(Destinations.SECOND_SCREEN_ROUTE) {
-                inclusive = true // Remove SecondScreen completely
-            }
-            popUpTo(navController.graph.findStartDestination().id) {
-                saveState = true
-            }
-            launchSingleTop = true
-            restoreState = true
+            navController.popBackStack()
         }
     }
 
     fun navigateToSecondScreen(userName: String) {
         val route = "${SECOND_SCREEN}/$userName"
         navController.navigate(route) {
-            popUpTo(Destinations.SECOND_SCREEN_ROUTE) {
-                inclusive = true // Remove previous SecondScreen instance
-            }
             popUpTo(navController.graph.findStartDestination().id) {
-                saveState = true
+                inclusive = true
             }
             launchSingleTop = true
+            restoreState = true
         }
     }
 }
