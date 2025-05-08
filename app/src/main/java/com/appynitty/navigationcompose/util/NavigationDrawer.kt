@@ -31,6 +31,7 @@ import com.appynitty.navigationcompose.Destinations
 import com.appynitty.navigationcompose.NavigationActions
 import com.appynitty.navigationcompose.R
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -88,7 +89,7 @@ fun AppDrawer(
             )
             DrawerButton(
                 painter = painterResource(id = R.drawable.ici_nature),
-                label = "First Screen",
+                label = "Second Screen",
                 isSelected = currentRoute == Destinations.SECOND_SCREEN_ROUTE,
                 action = {
                     scope.launch {

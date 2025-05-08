@@ -49,7 +49,7 @@ class NavigationActions(private val navController: NavHostController) {
 
     fun navigateToSecondScreen(userName: String) {
         val route = "${SECOND_SCREEN}/$userName"
-        if (navController.currentDestination?.route != route) {
+        if (navController.currentDestination?.route != Destinations.SECOND_SCREEN_ROUTE) {
             navController.navigate(route) {
                 launchSingleTop = true
                 restoreState = true
