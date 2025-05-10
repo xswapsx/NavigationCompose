@@ -60,6 +60,6 @@ dependencies {
 
     // Jetpack Compose integration
     implementation(libs.androidx.navigation.compose)
-
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+    implementation(libs.androidx.animation)
+    implementation(libs.kotlinx.serialization.json)
 }

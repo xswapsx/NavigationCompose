@@ -1,5 +1,8 @@
 package com.appynitty.navigationcompose
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.rememberDrawerState
@@ -31,7 +34,12 @@ fun MyNavGraph(
     val currentRoute = currentNavBackStackEntry?.destination?.route ?: startDestination
 
     NavHost(navController = navController, startDestination = startDestination) {
-        composable(route = Destinations.FIRST_SCREEN_ROUTE) {
+        composable(
+            route = Destinations.FIRST_SCREEN_ROUTE,
+            enterTransition = { fadeIn(animationSpec = tween(900)) },
+            exitTransition = { fadeOut(animationSpec = tween(900)) },
+            popEnterTransition = { fadeIn(animationSpec = tween(900)) },
+            popExitTransition = { fadeOut(animationSpec = tween(900)) }) {
             AppModalDrawer(drawerState, currentRoute, navActions) {
                 FirstScreen(
                     navigationActions = navActions,
@@ -40,6 +48,10 @@ fun MyNavGraph(
         }
         composable(
             route = Destinations.SECOND_SCREEN_ROUTE,
+            enterTransition = { fadeIn(animationSpec = tween(900)) },
+            exitTransition = { fadeOut(animationSpec = tween(900)) },
+            popEnterTransition = { fadeIn(animationSpec = tween(900)) },
+            popExitTransition = { fadeOut(animationSpec = tween(900)) },
             arguments = listOf(navArgument(DestinationsArgs.USER_NAME_ARG) {
                 type = NavType.StringType
                 defaultValue = "Guest"
