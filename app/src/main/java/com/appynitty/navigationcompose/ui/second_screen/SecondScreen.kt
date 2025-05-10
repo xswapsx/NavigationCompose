@@ -1,6 +1,7 @@
 package com.appynitty.navigationcompose.ui.second_screen
 
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,14 +37,18 @@ fun SecondScreen(
     openDrawer: () -> Unit,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
 ) {
+    BackHandler(enabled = true) {
+        navActions.goBack() // Use goBack instead of navigateToFirstScreen
+    }
+
     Scaffold(
         modifier = modifier.fillMaxSize(),
         snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             SecondScreenTopAppBar(
                 openDrawer = openDrawer,
-                onClickSettings = { Log.d("SecondScreen", "Settings clicked!") },
-                onClickAboutUs = { Log.d("SecondScreen", "About us clicked!") })
+                onClickSettings = { navActions.navigateToSettingsScreen() },
+                onClickAboutUs = { navActions.navigateToAboutUsScreen() })
         }
     ) { paddingValues ->
 
