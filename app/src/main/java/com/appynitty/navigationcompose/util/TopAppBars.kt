@@ -76,7 +76,7 @@ private fun MainMenu(onClickSettings: () -> Unit, onClickAboutUs: () -> Unit) {
     TopAppBarDropDownMenu(iconContent = {
         Icon(
             Icons.Filled.MoreVert,
-            null, tint = Color.White
+            null, tint = MaterialTheme.colorScheme.onBackground
         )
     }) { closeMenu ->
         DropdownMenuItem(
