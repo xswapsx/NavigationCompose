@@ -21,12 +21,20 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.navigation.navigation
 import com.appynitty.navigationcompose.Destinations.ABOUT_US_SCREEN_ROUTE
+import com.appynitty.navigationcompose.Destinations.FIRST_SCREEN_ROUTE
+import com.appynitty.navigationcompose.Destinations.LOGIN_SCREEN_ROUTE
 import com.appynitty.navigationcompose.Destinations.SETTINGS_SCREEN_ROUTE
+import com.appynitty.navigationcompose.Destinations.SIGNUP_SCREEN_ROUTE
+import com.appynitty.navigationcompose.Destinations.WELCOME_SCREEN_ROUTE
 import com.appynitty.navigationcompose.ui.about_us_screen.AboutUsScreen
 import com.appynitty.navigationcompose.ui.first_screen.FirstScreen
+import com.appynitty.navigationcompose.ui.login_screen.Login
 import com.appynitty.navigationcompose.ui.second_screen.SecondScreen
 import com.appynitty.navigationcompose.ui.settings_screen.SettingsScreen
+import com.appynitty.navigationcompose.ui.signup_screen.SignupScreen
+import com.appynitty.navigationcompose.ui.welcome_screen.WelcomeScreen
 import com.appynitty.navigationcompose.util.AppModalDrawer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -37,7 +45,7 @@ fun MyNavGraph(
     navActions: NavigationActions = NavigationActions(navController),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
-    startDestination: String = Destinations.FIRST_SCREEN_ROUTE
+    startDestination: String = WELCOME_SCREEN_ROUTE
 ) {
     val currentNavBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentNavBackStackEntry?.destination?.route ?: startDestination
@@ -49,68 +57,85 @@ fun MyNavGraph(
         (context as? ComponentActivity)?.finish()
     }
 
-    NavHost(navController = navController, startDestination = startDestination) {
-        composable(
-            route = Destinations.FIRST_SCREEN_ROUTE,
-            enterTransition = { fadeIn(animationSpec = tween(900)) },
-            exitTransition = { fadeOut(animationSpec = tween(900)) },
-            popEnterTransition = { fadeIn(animationSpec = tween(900)) },
-            popExitTransition = { fadeOut(animationSpec = tween(900)) }) {
-            AppModalDrawer(drawerState, currentRoute, navActions) {
-                FirstScreen(
-                    navigationActions = navActions,
-                    openDrawer = { coroutineScope.launch { drawerState.open() } }, finishApp = finishApp)
+    NavHost(navController = navController, startDestination = "onBoarding") {
+        navigation(startDestination = WELCOME_SCREEN_ROUTE, route = "onBoarding") {
+            composable(route = WELCOME_SCREEN_ROUTE){
+                WelcomeScreen(navActions = navActions)
             }
-        }
-        composable(
-            route = Destinations.SECOND_SCREEN_ROUTE,
-            enterTransition = { fadeIn(animationSpec = tween(900)) },
-            exitTransition = { fadeOut(animationSpec = tween(900)) },
-            popEnterTransition = { fadeIn(animationSpec = tween(900)) },
-            popExitTransition = { fadeOut(animationSpec = tween(900)) },
-            arguments = listOf(navArgument(DestinationsArgs.USER_NAME_ARG) {
-                type = NavType.StringType
-                defaultValue = "Guest"
-            })
-        ) { backStackEntry ->
-            val userName =
-                backStackEntry.arguments?.getString(DestinationsArgs.USER_NAME_ARG) ?: "Guest"
-            AppModalDrawer(drawerState, currentRoute, navActions) {
-                SecondScreen(
-                    navActions = navActions,
-                    userName = userName,
-                    openDrawer = { coroutineScope.launch { drawerState.open() } })
+            composable(route = LOGIN_SCREEN_ROUTE)  {
+                Login(navActions = navActions)
+            }
+            composable(route = SIGNUP_SCREEN_ROUTE) {
+                SignupScreen(navActions = navActions)
             }
         }
 
-        composable(
-            route = SETTINGS_SCREEN_ROUTE,
-            enterTransition = { fadeIn(animationSpec = tween(900)) },
-            exitTransition = { fadeOut(animationSpec = tween(900)) },
-            popEnterTransition = { fadeIn(animationSpec = tween(900)) },
-            popExitTransition = { fadeOut(animationSpec = tween(900)) }) {
-            AppModalDrawer(drawerState, currentRoute, navActions) {
-                SettingsScreen(
-                    navActions = navActions,
-                    onThemeToggle = { newTheme ->
-                        isDarkTheme = newTheme
-                    },
-                    onLanguageChange = {},
-                    isDarkTheme = isDarkTheme
-                )
+        navigation(startDestination = FIRST_SCREEN_ROUTE, route = "main") {
+            composable(
+                route = FIRST_SCREEN_ROUTE,
+                enterTransition = { fadeIn(animationSpec = tween(900)) },
+                exitTransition = { fadeOut(animationSpec = tween(900)) },
+                popEnterTransition = { fadeIn(animationSpec = tween(900)) },
+                popExitTransition = { fadeOut(animationSpec = tween(900)) }
+            ) {
+                AppModalDrawer(drawerState, currentRoute, navActions) {
+                    FirstScreen(
+                        navigationActions = navActions,
+                        openDrawer = { coroutineScope.launch { drawerState.open() } },
+                        finishApp = finishApp
+                    )
+                }
             }
-        }
+            composable(
+                route = Destinations.SECOND_SCREEN_ROUTE,
+                enterTransition = { fadeIn(animationSpec = tween(900)) },
+                exitTransition = { fadeOut(animationSpec = tween(900)) },
+                popEnterTransition = { fadeIn(animationSpec = tween(900)) },
+                popExitTransition = { fadeOut(animationSpec = tween(900)) },
+                arguments = listOf(navArgument(DestinationsArgs.USER_NAME_ARG) {
+                    type = NavType.StringType
+                    defaultValue = "Guest"
+                })
+            ) { backStackEntry ->
+                val userName =
+                    backStackEntry.arguments?.getString(DestinationsArgs.USER_NAME_ARG) ?: "Guest"
+                AppModalDrawer(drawerState, currentRoute, navActions) {
+                    SecondScreen(
+                        navActions = navActions,
+                        userName = userName,
+                        openDrawer = { coroutineScope.launch { drawerState.open() } })
+                }
+            }
 
-        composable(
-            route = ABOUT_US_SCREEN_ROUTE,
-            enterTransition = { fadeIn(animationSpec = tween(900)) },
-            exitTransition = { fadeOut(animationSpec = tween(900)) },
-            popEnterTransition = { fadeIn(animationSpec = tween(900)) },
-            popExitTransition = { fadeOut(animationSpec = tween(900)) }) {
-            AppModalDrawer(drawerState, currentRoute, navActions) {
-                AboutUsScreen(
-                    navActions = navActions
-                )
+            composable(
+                route = SETTINGS_SCREEN_ROUTE,
+                enterTransition = { fadeIn(animationSpec = tween(900)) },
+                exitTransition = { fadeOut(animationSpec = tween(900)) },
+                popEnterTransition = { fadeIn(animationSpec = tween(900)) },
+                popExitTransition = { fadeOut(animationSpec = tween(900)) }) {
+                AppModalDrawer(drawerState, currentRoute, navActions) {
+                    SettingsScreen(
+                        navActions = navActions,
+                        onThemeToggle = { newTheme ->
+                            isDarkTheme = newTheme
+                        },
+                        onLanguageChange = {},
+                        isDarkTheme = isDarkTheme
+                    )
+                }
+            }
+
+            composable(
+                route = ABOUT_US_SCREEN_ROUTE,
+                enterTransition = { fadeIn(animationSpec = tween(900)) },
+                exitTransition = { fadeOut(animationSpec = tween(900)) },
+                popEnterTransition = { fadeIn(animationSpec = tween(900)) },
+                popExitTransition = { fadeOut(animationSpec = tween(900)) }) {
+                AppModalDrawer(drawerState, currentRoute, navActions) {
+                    AboutUsScreen(
+                        navActions = navActions
+                    )
+                }
             }
         }
     }
