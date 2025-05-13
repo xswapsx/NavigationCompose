@@ -1,5 +1,6 @@
 package com.appynitty.navigationcompose.ui.signup_screen
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -48,6 +50,8 @@ fun SignupScreen(
     var phone by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isPasswordVisible by remember { mutableStateOf(false) }
+
+    val context = LocalContext.current
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -156,7 +160,10 @@ fun SignupScreen(
                     // Placeholder for signup action
                     if (name.isNotBlank() && email.isNotBlank() && phone.isNotBlank() && password.isNotBlank()) {
                         // Example: Navigate to a dashboard screen (if exists)
-                         navActions.navigateToMainGraph()
+                        navActions.navigateToMainGraph()
+                    } else {
+                        Toast.makeText(context, "All fields are mandatory!", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 },
                 modifier = Modifier
