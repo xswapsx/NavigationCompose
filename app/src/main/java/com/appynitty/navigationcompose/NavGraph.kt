@@ -81,8 +81,7 @@ fun MyNavGraph(
                 AppModalDrawer(drawerState, currentRoute, navActions) {
                     FirstScreen(
                         navigationActions = navActions,
-                        openDrawer = { coroutineScope.launch { drawerState.open() } },
-                        finishApp = finishApp
+                        openDrawer = { coroutineScope.launch { drawerState.open() } }
                     )
                 }
             }

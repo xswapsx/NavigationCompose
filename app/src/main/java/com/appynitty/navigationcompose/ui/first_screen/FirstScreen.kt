@@ -38,8 +38,7 @@ fun FirstScreen(
     modifier: Modifier = Modifier,
     navigationActions: NavigationActions,
     openDrawer: () -> Unit,
-    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
-    finishApp: () -> Unit
+    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
 ) {
 
     Scaffold(
@@ -101,5 +100,5 @@ fun FirstScreen(
 fun FirstScreenPreview() {
     FirstScreen(
         navigationActions = NavigationActions(NavHostController(LocalContext.current)),
-        openDrawer = {}, finishApp = {})
+        openDrawer = {})
 }
