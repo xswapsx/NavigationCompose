@@ -23,7 +23,7 @@ jobs:
           java-version: '17'
 
       - name: Decode keystore file
-        run: echo "${{ secrets.KEYSTORE_FILE_BASE64 }}" | base64 -d > app/appynittyKeystore.jks
+        run: echo "${{ secrets.KEYSTORE_FILE_BASE64 }}" | base64 -d > appynittyKeystore.jks
 
       - name: Give gradlew execute permission
         run: chmod +x ./gradlew
