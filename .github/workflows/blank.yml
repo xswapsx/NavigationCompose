@@ -25,11 +25,11 @@ jobs:
 
       - name: Give gradlew execute permission
         run: chmod +x ./gradlew
-        working-directory: ${{ github.workspace }}
+        working-directory: ${{ github.workspace }} #new
 
       - name: Build signed release APK
         run: ./gradlew assembleRelease -x lint
-        working-directory: ${{ github.workspace }}
+        working-directory: ${{ github.workspace }} #new
 
       - name: List APK output folder
         run: ls -R app/build/outputs/apk/
