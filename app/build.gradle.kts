@@ -22,7 +22,7 @@ android {
     signingConfigs {
         create("release") {
             // Path to your keystore file (make sure this matches where your GitHub Action decodes it)
-            storeFile = file("app/appynittyKeystore.jks")
+            storeFile = file("appynittyKeystore.jks")
             // Use either hardcoded passwords here (not recommended for security)
             // or pass them via gradle.properties or environment variables in your CI
 
