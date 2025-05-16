@@ -19,15 +19,30 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            // Path to your keystore file (make sure this matches where your GitHub Action decodes it)
+            storeFile = file("app/appynittyKeystore.jks")
+            // Use either hardcoded passwords here (not recommended for security)
+            // or pass them via gradle.properties or environment variables in your CI
+
+            storePassword = System.getenv("KEYSTORE_PASSWORD") ?: "your-keystore-password"
+            keyAlias = System.getenv("KEY_ALIAS") ?: "your-key-alias"
+            keyPassword = System.getenv("KEY_PASSWORD") ?: "your-key-password"
+        }
+    }
+
     buildTypes {
-        release {
+        getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -39,6 +54,7 @@ android {
         compose = true
     }
 }
+
 
 dependencies {
 
@@ -63,5 +79,5 @@ dependencies {
     implementation(libs.androidx.animation)
     implementation(libs.kotlinx.serialization.json)
 
-    implementation (libs.androidx.material.icons.extended) // Use the latest version
+    implementation(libs.androidx.material.icons.extended) // Use the latest version
 }

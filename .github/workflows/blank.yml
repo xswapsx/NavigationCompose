@@ -34,21 +34,14 @@ jobs:
         working-directory: ${{ github.workspace }}
 
       - name: List APK output folder
-        run: ls -lh app/build/outputs/apk/release/  # 🟢 Made more specific to show size & file presence
-
-      - name: Rename APK to ZIP  # 🟢 NEW: Rename APK to avoid Gmail block
-        run: mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/app-release.zip
+        run: ls -R app/build/outputs/apk/
 
       - name: Upload APK to GitHub Releases
         uses: softprops/action-gh-release@v1
         with:
-          files: app/build/outputs/apk/release/app-release.zip  # 🟢 update to zip
+          files: app/build/outputs/apk/release/app-release-unsigned.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Debug Email Username
-        run: |
-          echo "Using email: ${{ secrets.GMAIL_USERNAME }}"
 
       - name: Send APK via Email
         uses: dawidd6/action-send-mail@v3
@@ -60,8 +53,5 @@ jobs:
           subject: "New APK Build - NavigationCompose"
           to: ${{ secrets.EMAIL_RECEIVER }}
           from: ${{ secrets.GMAIL_USERNAME }}
-          body: |
-            ✅ New APK build is ready.
-            📎 APK is attached as a `.zip` file.
-            🔧 Please rename `app-release.zip` to `app-release.apk` before installing.
-          attachments: app/build/outputs/apk/release/app-release.zip  # 🟢 updated
+          body: "Download the attached APK."
+          attachments: app/build/outputs/apk/release/app-release-unsigned.apk
