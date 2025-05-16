@@ -29,6 +29,9 @@ jobs:
       - name: Build signed release APK
         run: ./gradlew assembleRelease -x lint
 
+      - name: List APK output folder
+        run: ls -R app/build/outputs/apk/
+
       - name: Upload APK to GitHub Releases
         uses: softprops/action-gh-release@v1
         with:
@@ -45,5 +48,6 @@ jobs:
           password: ${{ secrets.GMAIL_APP_PASSWORD }}
           subject: "New APK Build - NavigationCompose"
           to: ${{ secrets.EMAIL_RECEIVER }}
+          from: ${{ secrets.GMAIL_USERNAME }}
           body: "Download the latest APK from GitHub Releases."
           attachments: app/build/outputs/apk/release/app-release.apk
