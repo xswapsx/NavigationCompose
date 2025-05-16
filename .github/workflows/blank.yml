@@ -43,6 +43,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Debug Email Username
+        run: |
+          echo "Using email: ${{ secrets.GMAIL_USERNAME }}"
+
       - name: Send APK via Email
         uses: dawidd6/action-send-mail@v3
         with:
