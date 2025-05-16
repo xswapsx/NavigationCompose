@@ -51,7 +51,7 @@ jobs:
           username: ${{ secrets.GMAIL_USERNAME }}
           password: ${{ secrets.GMAIL_APP_PASSWORD }}
           subject: "New APK Build - NavigationCompose"
-          to: ${{ secrets.EMAIL_RECEIVER }}   #added to the git workflow.
+          to: "xswapsx@gmail.com" #${{ secrets.EMAIL_RECEIVER }}
           from: "xswapsx@gmail.com" #${{ secrets.GMAIL_USERNAME }}
           body: "Download the latest APK from GitHub Releases."
           attachments: app/build/outputs/apk/release/app-release.apk
