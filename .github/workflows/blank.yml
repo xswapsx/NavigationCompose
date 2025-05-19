@@ -43,7 +43,7 @@ jobs:
       - name: Upload APK to GitHub Releases
         uses: softprops/action-gh-release@v1
         with:
-          files: app/build/outputs/apk/release/app-release-unsigned.apk
+          files: app/build/outputs/apk/release/app-release.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -58,4 +58,4 @@ jobs:
           to: ${{ secrets.EMAIL_RECEIVER }}
           from: ${{ secrets.GMAIL_USERNAME }}
           body: "Download the attached APK."
-          attachments: app/build/outputs/apk/release/app-release-unsigned.apk
+          attachments: app/build/outputs/apk/release/app-release.apk
