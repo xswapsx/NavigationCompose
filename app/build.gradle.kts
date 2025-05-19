@@ -26,9 +26,9 @@ android {
             // Use either hardcoded passwords here (not recommended for security)
             // or pass them via gradle.properties or environment variables in your CI
 
-            storePassword = System.getenv("KEYSTORE_PASSWORD") ?: "your-keystore-password"
-            keyAlias = System.getenv("KEY_ALIAS") ?: "your-key-alias"
-            keyPassword = System.getenv("KEY_PASSWORD") ?: "your-key-password"
+            storePassword = System.getenv("KEYSTORE_PASSWORD")
+            keyAlias = System.getenv("KEY_ALIAS")
+            keyPassword = System.getenv("KEY_PASSWORD")
         }
     }
 
