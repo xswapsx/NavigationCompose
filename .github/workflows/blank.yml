@@ -57,5 +57,10 @@ jobs:
           subject: "New APK Build - NavigationCompose"
           to: ${{ secrets.EMAIL_RECEIVER }}
           from: ${{ secrets.GMAIL_USERNAME }}
-          body: "Download the attached APK."
-          attachments: app/build/outputs/apk/release/app-release.apk
+          body: |
+            A new APK build is available for download:
+
+            👉 [Download APK](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/app-release.apk)
+
+            This was built from commit: ${{ github.sha }}
+      
